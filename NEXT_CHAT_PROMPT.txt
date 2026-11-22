@@ -1,0 +1,8 @@
+Continue ManZila “Aqlli Bola” from v56 Phase 9.1.
+Base archive: manzila_Aqlli_Bola_v56_phase9_1.zip
+Changed files archive: manzila_v56_phase9_1_changed_files.zip
+Handoff: docs/PHASE_9_SUSAMBIL_VERTICAL_SLICE.md
+
+Phase 9.1 replaced the old Susambil 10-question screen with a four-stage guided adventure: muddy path (math), bridge (Ona tili), fast water (math), and helping villagers (Odobnoma). Every hazard is warned in advance. Eshak has one per-run help interaction. Answer explanations, progress, two endings, replay, and profile stars/subject progress callback are included. Existing SusambilMathScreen(profile, onUpdate) route contract is preserved.
+
+Do not claim compile/test/build success: Flutter/Dart SDK unavailable. Next: inspect and improve the prototype; add proper visual assets/animation without changing the approved robot mascot, add meaningful branching dialogue and story flags, persistent profile campaign progress, GameStatsService integration, and then Game Editor content support. Preserve Uzbek national setting. Keep creating a full-project ZIP, changed-files ZIP, changelog, and handoff at each milestone. Never mark prior work as newly completed.

@@ -1,0 +1,64 @@
+name: ManZila APK Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodni yuklab olish
+        uses: actions/checkout@v4
+
+      - name: Java 17 o'rnatish
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Flutter o'rnatish
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.5'
+          channel: 'stable'
+          cache: true
+
+      - name: Flutter versiyasini tekshirish
+        run: flutter --version
+
+      - name: Paketlarni yuklash
+        run: flutter pub get
+
+      - name: Statik tahlil
+        run: flutter analyze
+        continue-on-error: true
+
+      - name: Testlarni bajarish
+        run: flutter test --reporter=expanded
+        continue-on-error: true
+
+      - name: gradlew ga ijro ruxsati berish
+        run: chmod +x android/gradlew
+
+      - name: Release APK yaratish
+        run: flutter build apk --release
+
+      - name: APK faylini saqlash
+        uses: actions/upload-artifact@v4
+        with:
+          name: manzila-aqlli-bola-v1-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 30
+
+      - name: APK ma'lumotlari
+        run: |
+          echo "=== APK tayyor ==="
+          ls -lh build/app/outputs/flutter-apk/app-release.apk
+          echo "SHA256:"
+          sha256sum build/app/outputs/flutter-apk/app-release.apk
