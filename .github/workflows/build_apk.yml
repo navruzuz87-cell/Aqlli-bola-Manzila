@@ -43,11 +43,12 @@ jobs:
         run: flutter test --reporter=expanded
         continue-on-error: true
 
-      - name: gradlew ga ijro ruxsati berish
-        run: chmod +x android/gradlew
-
       - name: Release APK yaratish
-        run: flutter build apk --release
+        run: |
+          cd android
+          chmod +x gradlew
+          cd ..
+          flutter build apk --release
 
       - name: APK faylini saqlash
         uses: actions/upload-artifact@v4
@@ -55,10 +56,3 @@ jobs:
           name: manzila-aqlli-bola-v1-release
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 30
-
-      - name: APK ma'lumotlari
-        run: |
-          echo "=== APK tayyor ==="
-          ls -lh build/app/outputs/flutter-apk/app-release.apk
-          echo "SHA256:"
-          sha256sum build/app/outputs/flutter-apk/app-release.apk
